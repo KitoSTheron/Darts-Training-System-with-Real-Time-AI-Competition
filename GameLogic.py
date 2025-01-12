@@ -25,7 +25,6 @@ class GameLogic(tk.Frame):
             status = self.HandleThrow(hitStats[0], hitStats[1])
             if (status == 2):
                 self.player.score -= hitStats[0]
-                print(str(self.player.score))
             print(self.player.score)
         print("Game Over")
         

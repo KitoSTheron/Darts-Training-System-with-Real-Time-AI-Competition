@@ -3,7 +3,7 @@ import math
 
 class Dartboard(tk.Canvas):
     def __init__(self, master=None):
-        super().__init__(master, width=600, height=600)
+        super().__init__(master, width=800, height=600)
         self.pack(fill=tk.BOTH, expand=True)
         self.bind("<Configure>", self.on_resize)
         self.scores = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5]
@@ -86,7 +86,7 @@ class Dartboard(tk.Canvas):
             section = int(angle // (360 / 20))
             score = self.scores[section] * 3
             return [score,False]
-        elif distance <= radius:
+        elif distance <= (radius/1.15):
             section = int(angle // (360 / 20))
             score = self.scores[section]
             return [score,False]
