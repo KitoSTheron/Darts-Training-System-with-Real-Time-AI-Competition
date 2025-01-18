@@ -1,17 +1,14 @@
 import tkinter as tk
-import math
-from Dartboard import Dartboard
 from GameLogic import GameLogic
-from Player import Player
-from Player import HumanPlayer
+from Dartboard import Dartboard
+from Player import HumanPlayer, AIPlayer
+
 
 if __name__ == "__main__":
 
     root = tk.Tk()
-    root.title("Dartboard")
     dartboard = Dartboard(master=root)
-    player = HumanPlayer(name="Player 1", dartboard=dartboard)
-    rules = GameLogic(master=root, dartboard=dartboard, player = player)
-    rules.playGame()
-    
+    player = HumanPlayer("player1", dartboard)
+    game_logic = GameLogic(master=root, dartboard=dartboard, player=player)
+    game_logic.playGame()
     root.mainloop()

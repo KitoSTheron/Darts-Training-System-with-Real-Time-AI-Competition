@@ -1,16 +1,9 @@
-import math
 import tkinter as tk
-
-from traitlets import This
-
-from Dartboard import Dartboard
-from Player import Player
+from AIFeatures.ParentGenerator import ParentGenerator
 
 gameOver = 0
 bust = 1
 nextThrow = 2
-
-
 
 class GameLogic(tk.Frame):
     def __init__(self, master=None, dartboard=None, player=None):
@@ -21,14 +14,27 @@ class GameLogic(tk.Frame):
     def playGame(self):
         status = -1
         while(status != 0):
-            hitStats = self.player.throw_dart()
-            status = self.HandleThrow(hitStats[0], hitStats[1])
-            if (status == 2):
-                self.player.score -= hitStats[0]
-            print(self.player.score)
+            originalScore = self.player.score
+            for i in range(3):
+                if i == 0 and self.dartboard.current_dot:
+                    self.dartboard.delete(self.dartboard.current_dot)
+                    self.dartboard.current_dot = None
+                hitStats = self.player.throw_dart()
+                status = self.HandleThrow(hitStats[0], hitStats[1])
+                if (status == gameOver):
+                    self.dartboard.update_scoreboard(hitStats[0])
+                    status = 0  # Exit the while loop
+                    break
+                elif (status == bust):
+                    self.player.score = originalScore
+                    self.dartboard.update_scoreboard(-1)
+                    break
+                elif (status == nextThrow):
+                    self.player.score -= hitStats[0]
+                    self.dartboard.update_scoreboard(hitStats[0])
+                print(self.player.score)
         print("Game Over")
-        
-        
+
     def HandleThrow(self, hitValue, isDouble):
         if ((self.player.score - hitValue == 0) and isDouble):
             return gameOver
@@ -36,5 +42,3 @@ class GameLogic(tk.Frame):
             return bust
         else:
             return nextThrow
-
-    

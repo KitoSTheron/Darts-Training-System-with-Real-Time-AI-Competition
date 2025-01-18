@@ -1,4 +1,7 @@
 import tkinter as tk
+from AIFeatures.ParentGenerator import ParentGenerator
+
+
 
 class Player:
     def __init__(self, name, dartboard):
@@ -30,5 +33,7 @@ class AIPlayer(Player):
         super().__init__(name, dartboard)
 
     def throw_dart(self):
-        # Implement logic for AI player throwing a dart
+        generateParent = ParentGenerator(self.dartboard)
+        generateParent.RandomParentGenerator()
         print(f"{self.name} (AI) throws a dart!")
+        return generateParent.RandomParentGenerator()[0]
