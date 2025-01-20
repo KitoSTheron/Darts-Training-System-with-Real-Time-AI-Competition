@@ -1,6 +1,7 @@
 import tkinter as tk
-from AIFeatures.ParentGenerator import ParentGenerator
-
+from AIController import AIController
+from ParentGenerator import ParentGenerator
+from StochasticGradientDescent import performHeuristic
 
 
 class Player:
@@ -9,7 +10,7 @@ class Player:
         self.score = 501
         self.dartboard = dartboard
 
-    def throw_dart(self):
+    def throw_dart(self,throwNum):
         raise NotImplementedError("This method should be overridden by subclasses")
 
 class HumanPlayer(Player):
@@ -18,7 +19,7 @@ class HumanPlayer(Player):
         self.click_occurred = tk.BooleanVar(value=False)
         self.dartboard.master.bind("<Button-1>", self.await_click)
 
-    def throw_dart(self):
+    def throw_dart(self,throwNum):
         self.click_occurred.set(False)
         self.dartboard.master.wait_variable(self.click_occurred)
         return self.click_result
@@ -31,9 +32,11 @@ class HumanPlayer(Player):
 class AIPlayer(Player):
     def __init__(self, name, dartboard):
         super().__init__(name, dartboard)
-
-    def throw_dart(self):
-        generateParent = ParentGenerator(self.dartboard)
-        generateParent.RandomParentGenerator()
+        self.optimisedleg = []
+    def throw_dart(self,throwNum):
+        
         print(f"{self.name} (AI) throws a dart!")
-        return generateParent.RandomParentGenerator()[0]
+        if (throwNum == 0):
+            controller = AIController(self.score,self.dartboard)
+            self.optimisedleg = controller.optimise_throw()
+        return self.optimisedleg[throwNum][0]

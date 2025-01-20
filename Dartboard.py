@@ -115,11 +115,6 @@ class Dartboard(tk.Canvas):
         # Calculate angle
         angle = (math.degrees(math.atan2(dy, dx)) + 90 + 9) % 360
 
-        # Draw a red dot at the click coordinates
-        if self.current_dot:
-            self.delete(self.current_dot)
-        self.current_dot = self.create_oval(x - 5, y - 5, x + 5, y + 5, fill="red")
-
         # Determine the score based on angle and distance
         if distance <= bullseye_radius:
             return [50, True]
@@ -140,6 +135,12 @@ class Dartboard(tk.Canvas):
         else:
             return [0, False]
 
+    def draw_dart(self,x,y):
+        # Draw a red dot at the click coordinates
+        if self.current_dot:
+            self.delete(self.current_dot)
+        self.current_dot = self.create_oval(x - 5, y - 5, x + 5, y + 5, fill="red")
+        
     def on_resize(self, event):
         self.draw_dartboard()
         self.draw_scoreboard()

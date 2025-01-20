@@ -1,5 +1,5 @@
 import tkinter as tk
-from AIFeatures.ParentGenerator import ParentGenerator
+from ParentGenerator import ParentGenerator
 
 gameOver = 0
 bust = 1
@@ -16,10 +16,7 @@ class GameLogic(tk.Frame):
         while(status != 0):
             originalScore = self.player.score
             for i in range(3):
-                if i == 0 and self.dartboard.current_dot:
-                    self.dartboard.delete(self.dartboard.current_dot)
-                    self.dartboard.current_dot = None
-                hitStats = self.player.throw_dart()
+                hitStats = self.player.throw_dart(i)
                 status = self.HandleThrow(hitStats[0], hitStats[1])
                 if (status == gameOver):
                     self.dartboard.update_scoreboard(hitStats[0])
