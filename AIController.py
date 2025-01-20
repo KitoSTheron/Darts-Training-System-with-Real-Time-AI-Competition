@@ -1,6 +1,8 @@
+import copy
 from ParentGenerator import ParentGenerator
 
-from StochasticGradientDescent import performHeuristic
+from ParentSelection import get_highest_scoring_object, Creat_child_array
+from StochasticGradientDescent import performHeuristic, deep_copy_solution
 
 
 class AIController:
@@ -10,18 +12,22 @@ class AIController:
         self.score = score
         self.dartboard = dartboard
 
-
+    
     def optimise_throw(self):
         generateParent = ParentGenerator(self.dartboard)
-        solution = generateParent.RandomParentGenerator()
-        improved = False
-        newsolution = solution
-        while improved == False:
-            newsolution = performHeuristic(solution,self.score,self.dartboard)
-            if (newsolution != solution):
-                improved = True
-        self.dartboard.draw_dart(newsolution[0][1][0],newsolution[0][1][1])
-        print(newsolution)
-        return newsolution
+        parents = []
+
+        for i in range(10000):
+            parent = generateParent.RandomParentGenerator()
+            parents.append(deep_copy_solution(parent))
+
+        for i in range(5):
+            for i in range(10000):
+                parents[i] = performHeuristic(deep_copy_solution(parents[i]),self.score,self.dartboard)
+            parents = Creat_child_array(self.score,deep_copy_solution(parents))
+
+        bestSolution = get_highest_scoring_object(self.score,parents)
+        self.dartboard.draw_dart(bestSolution[0][1][0],bestSolution[0][1][1])
+        return bestSolution
     
     

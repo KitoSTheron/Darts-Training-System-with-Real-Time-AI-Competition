@@ -22,6 +22,6 @@ def deep_copy_solution(solution):
     return [[item.copy() if isinstance(item, list) else item for item in sublist] for sublist in solution]
 
 def random_neighbour(x, y):
-    x = x + random.randint(-200, 200)
-    y = y + random.randint(-200, 200)
+    x = x + random.randint(-300, 300)
+    y = y + random.randint(-300, 300)
     return [x, y]
