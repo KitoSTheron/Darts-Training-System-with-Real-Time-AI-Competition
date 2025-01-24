@@ -14,20 +14,19 @@ class AIController:
 
     
     def optimise_throw(self):
-        generateParent = ParentGenerator(self.dartboard)
+        generateParent = ParentGenerator(self.dartboard,self)
         parents = []
 
-        for i in range(10000):
-            parent = generateParent.RandomParentGenerator()
+        for i in range(4):
+            parent = generateParent.AntParentGenerator()
             parents.append(deep_copy_solution(parent))
 
         for i in range(5):
-            for i in range(10000):
+            for i in range(4):
                 parents[i] = performHeuristic(deep_copy_solution(parents[i]),self.score,self.dartboard)
             parents = Creat_child_array(self.score,deep_copy_solution(parents))
 
         bestSolution = get_highest_scoring_object(self.score,parents)
-        self.dartboard.draw_dart(bestSolution[0][1][0],bestSolution[0][1][1])
         return bestSolution
     
     

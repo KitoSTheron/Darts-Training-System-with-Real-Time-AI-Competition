@@ -137,8 +137,8 @@ class Dartboard(tk.Canvas):
 
     def draw_dart(self,x,y):
         # Draw a red dot at the click coordinates
-        if self.current_dot:
-            self.delete(self.current_dot)
+        #if self.current_dot:
+        #    self.delete(self.current_dot)
         self.current_dot = self.create_oval(x - 5, y - 5, x + 5, y + 5, fill="red")
         
     def on_resize(self, event):

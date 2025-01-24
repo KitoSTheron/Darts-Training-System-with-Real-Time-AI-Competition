@@ -39,4 +39,5 @@ class AIPlayer(Player):
         if (throwNum == 0):
             controller = AIController(self.score,self.dartboard)
             self.optimisedleg = controller.optimise_throw()
+        self.dartboard.draw_dart(self.optimisedleg[throwNum][1][0],self.optimisedleg[throwNum][1][1])
         return self.optimisedleg[throwNum][0]

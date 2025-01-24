@@ -10,8 +10,8 @@ def performHeuristic(solution, startingScore, dartboard):
     myDartboard = dartboard
 
     for i in range(3):
-        candidateSolution[i][1] = random_neighbour(solution[i][1][0], solution[i][1][1])
-        candidateSolution[i][0] = Dartboard.on_click(myDartboard, candidateSolution[i][1][0], candidateSolution[i][1][1])
+        candidateSolution[i][1] = random_neighbour(candidateSolution[i][1][0],candidateSolution[i][1][1])
+        candidateSolution[i][0] = dartboard.on_click(candidateSolution[i][1][0], candidateSolution[i][1][1])
         
         if score_darts(startingScore, candidateSolution) > score_darts(startingScore, newSolution):
             newSolution = deep_copy_solution(candidateSolution)  # Deep copy to ensure isolation
