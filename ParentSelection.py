@@ -30,7 +30,7 @@ def Creat_child_array(startingScore, Parents):
             highest_scores[1] = score
             highest_scoring_objects[1] = Parent
     children = []
-    for i in range(4):
+    for i in range(5):
         child1 = highest_scoring_objects[0]
         child2 = highest_scoring_objects[1]
         children.append(deep_copy_solution(child1))

@@ -5,6 +5,7 @@ class Dartboard(tk.Canvas):
     WIDTH = 1000
     HEIGHT = 600
 
+    
     def __init__(self, master=None):
         super().__init__(master, width=Dartboard.WIDTH, height=Dartboard.HEIGHT)
         self.pack(fill=tk.BOTH, expand=True)
@@ -128,7 +129,7 @@ class Dartboard(tk.Canvas):
             section = int(angle // (360 / 20))
             score = self.scores[section] * 3
             return [score, False]
-        elif distance <= radius:
+        elif distance <= radius/1.15:
             section = int(angle // (360 / 20))
             score = self.scores[section]
             return [score, False]
