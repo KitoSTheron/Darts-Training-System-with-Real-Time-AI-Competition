@@ -22,6 +22,8 @@ def performHeuristic(solution, startingScore, dartboard):
     return newSolution
 
 def deep_copy_solution(solution):
+    if solution is None:
+        return None
     return [[item.copy() if isinstance(item, list) else item for item in sublist] for sublist in solution]
 
 def best_improvement(x,y,score,dartboard):

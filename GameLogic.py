@@ -6,36 +6,41 @@ bust = 1
 nextThrow = 2
 
 class GameLogic(tk.Frame):
-    def __init__(self, master=None, dartboard=None, player=None):
+    def __init__(self, master=None, dartboard=None, player1=None, player2=None):
         super().__init__(master)
         self.dartboard = dartboard
-        self.player = player
+        self.players = [player1, player2]
+        self.current_player_index = 0
 
     def playGame(self):
         status = -1
         while(status != 0):
-            originalScore = self.player.score
+            current_player = self.players[self.current_player_index]
+            originalScore = current_player.score
             for i in range(3):
-                hitStats = self.player.throw_dart(i)
-                status = self.HandleThrow(hitStats[0], hitStats[1])
+                hitStats = current_player.throw_dart(i)
+                status = self.HandleThrow(hitStats[0], hitStats[1],self.current_player_index)
                 if (status == gameOver):
-                    self.dartboard.update_scoreboard(hitStats[0])
+                    self.dartboard.update_scoreboard(hitStats[0],self.current_player_index,status == bust)
                     status = 0  # Exit the while loop
                     break
                 elif (status == bust):
-                    self.player.score = originalScore
-                    self.dartboard.update_scoreboard(-1)
+                    current_player.score = originalScore
+                    self.dartboard.update_scoreboard(-1,self.current_player_index,status == bust)
                     break
                 elif (status == nextThrow):
-                    self.player.score -= hitStats[0]
-                    self.dartboard.update_scoreboard(hitStats[0])
-                print(self.player.score)
+                    current_player.score -= hitStats[0]
+                    self.dartboard.update_scoreboard(hitStats[0],self.current_player_index,status == bust)
+                print(f"{current_player.name}'s score: {current_player.score}")
+            
+            # Switch to the next player
+            self.current_player_index = (self.current_player_index + 1) % 2
         print("Game Over")
 
-    def HandleThrow(self, hitValue, isDouble):
-        if ((self.player.score - hitValue == 0) and isDouble):
+    def HandleThrow(self, hitValue, isDouble,playerIndex):
+        if ((self.players[playerIndex].score - hitValue == 0) and isDouble):
             return gameOver
-        elif (self.player.score - hitValue <= 1):
+        elif (self.players[playerIndex].score - hitValue <= 1):
             return bust
         else:
             return nextThrow

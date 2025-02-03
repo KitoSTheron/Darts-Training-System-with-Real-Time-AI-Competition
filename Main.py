@@ -15,8 +15,9 @@ if __name__ == "__main__":
 
     # Create the Dartboard, Player, and GameLogic instances
     dartboard = Dartboard(master=root)
-    player = AIPlayer("player1", dartboard)
-    game_logic = GameLogic(master=root, dartboard=dartboard, player=player)
+    player1 = HumanPlayer("player1", dartboard, 0)
+    player2 = AIPlayer("player2", dartboard, 1)
+    game_logic = GameLogic(master=root, dartboard=dartboard, player1=player1, player2=player2)
         # Schedule the playGame method to run after the Tkinter event loop starts
     root.after(100, game_logic.playGame)
     
