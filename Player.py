@@ -20,7 +20,7 @@ class HumanPlayer(Player):
         self.click_occurred = tk.BooleanVar(value=False)
         self.dartboard.master.bind("<Button-1>", self.await_click)
 
-    def throw_dart(self,throwNum):
+    def throw_dart(self,throwNum,difficulty):
         self.click_occurred.set(False)
         self.dartboard.master.wait_variable(self.click_occurred)
         return self.click_result
@@ -37,11 +37,11 @@ class AIPlayer(Player):
         self.optimisedleg = []
         self.playernum = playernum
 
-    def throw_dart(self,throwNum):
+    def throw_dart(self,throwNum,difficulty):
         
         print(f"{self.name} (AI) throws a dart!")
         if (throwNum == 0):
-            controller = AIController(self.score,self.dartboard)
+            controller = AIController(self.score,self.dartboard,difficulty)
             self.optimisedleg = controller.optimise_throw()
         self.dartboard.draw_dart(self.optimisedleg[throwNum][1][0],self.optimisedleg[throwNum][1][1],self.playernum)
         return self.optimisedleg[throwNum][0]

@@ -2,11 +2,13 @@ import random
 from AntColonyOptimisation import optimise_throw
 
 class ParentGenerator:
-    def __init__(self, dartboard, player):
+    def __init__(self, dartboard, player, difficulty):
         self.dartboard = dartboard
         self.player = player
+        self.difficulty = difficulty
+
     def AntParentGenerator(self):
-        return optimise_throw(self.dartboard,self.player.score)
+        return optimise_throw(self.dartboard,self.player.score,self.difficulty)
     
     def RandomParentGenerator(self):
         coordinates = []

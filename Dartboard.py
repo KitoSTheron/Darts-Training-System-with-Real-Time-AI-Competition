@@ -26,8 +26,8 @@ class Dartboard(tk.Canvas):
         x_left = 70
         x_right = Dartboard.WIDTH - 150
         y = 100
-        self.create_text(x_left, y, text="           Player 1 Score", font=('Arial', 24, 'bold'), fill='purple', tags="scoreboard")
-        self.create_text(x_right, y, text="Player 2 Score", font=('Arial', 24, 'bold'), fill='purple', tags="scoreboard")
+        self.create_text(x_left, y, text="           Player 1 Score", font=('Arial', 24, 'bold'), fill='red', tags="scoreboard")
+        self.create_text(x_right, y, text="Player 2 Score", font=('Arial', 24, 'bold'), fill='blue', tags="scoreboard")
         
         bustnum_left = 0
         bustnum_right = 0

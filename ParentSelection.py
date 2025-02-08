@@ -15,7 +15,7 @@ def get_highest_scoring_object(startingScore,Parents):
     
     return highest_scoring_object
 
-def Creat_child_array(startingScore, Parents):
+def Creat_child_array(startingScore, Parents, parentlength):
     highest_scores = [float('-inf'), float('-inf')]
     highest_scoring_objects = [None, None]
 
@@ -30,7 +30,7 @@ def Creat_child_array(startingScore, Parents):
             highest_scores[1] = score
             highest_scoring_objects[1] = Parent
     children = []
-    for i in range(5):
+    for i in range(int(parentlength/2)):
         child1 = highest_scoring_objects[0]
         child2 = highest_scoring_objects[1]
         children.append(deep_copy_solution(child1))

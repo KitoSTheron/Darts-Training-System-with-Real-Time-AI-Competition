@@ -6,11 +6,12 @@ bust = 1
 nextThrow = 2
 
 class GameLogic(tk.Frame):
-    def __init__(self, master=None, dartboard=None, player1=None, player2=None):
+    def __init__(self, master=None, dartboard=None, player1=None, player2=None, difficulty = None):
         super().__init__(master)
         self.dartboard = dartboard
         self.players = [player1, player2]
         self.current_player_index = 0
+        self.difficulty = difficulty
 
     def playGame(self):
         status = -1
@@ -18,7 +19,7 @@ class GameLogic(tk.Frame):
             current_player = self.players[self.current_player_index]
             originalScore = current_player.score
             for i in range(3):
-                hitStats = current_player.throw_dart(i)
+                hitStats = current_player.throw_dart(i,self.difficulty)
                 status = self.HandleThrow(hitStats[0], hitStats[1],self.current_player_index)
                 if (status == gameOver):
                     self.dartboard.update_scoreboard(hitStats[0],self.current_player_index,status == bust)

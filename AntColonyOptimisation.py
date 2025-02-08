@@ -2,9 +2,9 @@ import random
 import numpy as np
 from Scorer import score_darts
 
-def optimise_throw(dartboard, start_score):
-    num_ants = 50
-    num_iterations = 100
+def optimise_throw(dartboard, start_score,difficulty):
+    num_ants = int(difficulty/ 8)
+    num_iterations = int(difficulty/ 6)
     evaporation_rate = 0.1
     pheromone_deposit_factor = 100
     radius = 290
