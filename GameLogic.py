@@ -29,6 +29,7 @@ class GameLogic(tk.Frame):
                         self.dartboard.player2_score = current_player.score
                     self.dartboard.update_scoreboard(hitStats[0],self.current_player_index,status == bust)
                     status = 0  # Exit the while loop
+                    break
                 elif (status == bust):
                     current_player.score = originalScore
                     if (self.current_player_index == 0):
