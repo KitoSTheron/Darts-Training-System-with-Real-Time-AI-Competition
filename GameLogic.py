@@ -22,20 +22,33 @@ class GameLogic(tk.Frame):
                 hitStats = current_player.throw_dart(i,self.difficulty)
                 status = self.HandleThrow(hitStats[0], hitStats[1],self.current_player_index)
                 if (status == gameOver):
+                    current_player.score = 0
+                    if (self.current_player_index == 0):
+                        self.dartboard.player1_score = current_player.score
+                    else:
+                        self.dartboard.player2_score = current_player.score
                     self.dartboard.update_scoreboard(hitStats[0],self.current_player_index,status == bust)
                     status = 0  # Exit the while loop
-                    break
                 elif (status == bust):
                     current_player.score = originalScore
+                    if (self.current_player_index == 0):
+                        self.dartboard.player1_score = current_player.score
+                    else:
+                        self.dartboard.player2_score = current_player.score
                     self.dartboard.update_scoreboard(-1,self.current_player_index,status == bust)
                     break
                 elif (status == nextThrow):
                     current_player.score -= hitStats[0]
+                    if (self.current_player_index == 0):
+                        self.dartboard.player1_score = current_player.score
+                    else:
+                        self.dartboard.player2_score = current_player.score
                     self.dartboard.update_scoreboard(hitStats[0],self.current_player_index,status == bust)
-                print(f"{current_player.name}'s score: {current_player.score}")
-            
             # Switch to the next player
             self.current_player_index = (self.current_player_index + 1) % 2
+            # Give half a second for the GUI to update
+            self.update_idletasks()
+            self.after(500)
         print("Game Over")
 
     def HandleThrow(self, hitValue, isDouble,playerIndex):

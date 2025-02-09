@@ -5,16 +5,18 @@ class Dartboard(tk.Canvas):
     WIDTH = 1000
     HEIGHT = 600
 
-    
     def __init__(self, master=None):
         super().__init__(master, width=Dartboard.WIDTH, height=Dartboard.HEIGHT)
         self.pack(fill=tk.BOTH, expand=True)
         self.scores = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5]
         self.drawn = False  # Flag to indicate if the dartboard has been drawn
+        self.player1_score = 501
+        self.player2_score = 501
         self.draw_dartboard()
         self.score_list = []
         self.current_dot = None
         self.draw_scoreboard()
+
     def get_width(self):
         return Dartboard.WIDTH
 
@@ -25,43 +27,36 @@ class Dartboard(tk.Canvas):
         self.delete("scoreboard")
         x_left = 70
         x_right = Dartboard.WIDTH - 150
-        y = 100
-        self.create_text(x_left, y, text="           Player 1 Score", font=('Arial', 24, 'bold'), fill='red', tags="scoreboard")
+        y = 80
+        self.create_text(110, y, text="Player 1 Score", font=('Arial', 24, 'bold'), fill='red', tags="scoreboard")
         self.create_text(x_right, y, text="Player 2 Score", font=('Arial', 24, 'bold'), fill='blue', tags="scoreboard")
+        # Update the total scores at the top
+        self.create_text(100, y - 40, text=f"Total: {self.player1_score}", font=('Arial', 24, 'bold'), fill='red', tags="scoreboard")
+        self.create_text(x_right, y - 40, text=f"Total: {self.player2_score}", font=('Arial', 24, 'bold'), fill='blue', tags="scoreboard")
         
-        bustnum_left = 0
-        bustnum_right = 0
+        bustnum = 0  # Array to hold bustnum for both players
         
         for index, (score, player) in enumerate(self.score_list):
             if player == 0:
                 x = x_left
-                bustnum = bustnum_left
             else:
                 x = x_right
-                bustnum = bustnum_right
-            
+
             if score == -1:
                 score_text = "X"
                 y_offset = ((index + bustnum) // 3) * 30
                 x_offset = ((index + bustnum) % 3) * 50
-                self.create_text(x + x_offset, y + y_offset + 30, text=score_text, font=('Arial', 18, 'bold'), fill='purple', tags="scoreboard")
+                self.create_text(x + x_offset, y + y_offset + 30, text=score_text, font=('Arial', 18, 'bold'), fill='red', tags="scoreboard")
                 while (index + bustnum + 1) % 3 != 0:
-                    if player == 0:
-                        bustnum_left += 1
-                    else:
-                        bustnum_right += 1
+                    bustnum += 1
                     x_offset = ((index + bustnum) % 3) * 50
-                    self.create_text(x + x_offset, y + y_offset + 30, text=score_text, font=('Arial', 18, 'bold'), fill='purple', tags="scoreboard")
+                    self.create_text(x + x_offset, y + y_offset + 30, text=score_text, font=('Arial', 18, 'bold'), fill='red', tags="scoreboard")
             else:
                 score_text = str(score)
                 y_offset = ((index + bustnum) // 3) * 30
                 x_offset = ((index + bustnum) % 3) * 50
-                self.create_text(x + x_offset, y + y_offset + 30, text=score_text, font=('Arial', 18, 'bold'), fill='purple', tags="scoreboard")
-            
-            if player == 0:
-                bustnum_left = bustnum
-            else:
-                bustnum_right = bustnum
+                self.create_text(x + x_offset, y + y_offset + 30, text=score_text, font=('Arial', 18, 'bold'), fill='black', tags="scoreboard")
+
 
     def update_scoreboard(self, score, playernum, is_bust):
         if is_bust:
@@ -149,7 +144,7 @@ class Dartboard(tk.Canvas):
             section = int(angle // (360 / 20))
             score = self.scores[section] * 3
             return [score, False]
-        elif distance <= radius/1.15:
+        elif distance <= radius:
             section = int(angle // (360 / 20))
             score = self.scores[section]
             return [score, False]

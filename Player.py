@@ -39,7 +39,6 @@ class AIPlayer(Player):
 
     def throw_dart(self,throwNum,difficulty):
         
-        print(f"{self.name} (AI) throws a dart!")
         if (throwNum == 0):
             controller = AIController(self.score,self.dartboard,difficulty)
             self.optimisedleg = controller.optimise_throw()
