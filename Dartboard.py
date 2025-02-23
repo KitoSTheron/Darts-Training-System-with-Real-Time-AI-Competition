@@ -31,10 +31,12 @@ class Dartboard(tk.Canvas):
         self.create_text(110, y, text="Player 1 Score", font=('Arial', 24, 'bold'), fill='red', tags="scoreboard")
         self.create_text(x_right, y, text="Player 2 Score", font=('Arial', 24, 'bold'), fill='blue', tags="scoreboard")
         # Update the total scores at the top
-        self.create_text(100, y - 40, text=f"Total: {self.player1_score}", font=('Arial', 24, 'bold'), fill='red', tags="scoreboard")
-        self.create_text(x_right, y - 40, text=f"Total: {self.player2_score}", font=('Arial', 24, 'bold'), fill='blue', tags="scoreboard")
+        player1_text = "Winner" if self.player1_score == 0 else f"Total: {self.player1_score}"
+        player2_text = "Winner" if self.player2_score == 0 else f"Total: {self.player2_score}"
+        self.create_text(100, y - 40, text=player1_text, font=('Arial', 24, 'bold'), fill='red', tags="scoreboard")
+        self.create_text(x_right, y - 40, text=player2_text, font=('Arial', 24, 'bold'), fill='blue', tags="scoreboard")
         
-        bustnum = 0  # Array to hold bustnum for both players
+        bustnum = 0
         
         for index, (score, player) in enumerate(self.score_list):
             if player == 0:
@@ -44,7 +46,7 @@ class Dartboard(tk.Canvas):
 
             if score == -1:
                 score_text = "X"
-                y_offset = ((index + bustnum) // 3) * 30
+                y_offset = ((index + bustnum) // 3) * 12
                 x_offset = ((index + bustnum) % 3) * 50
                 self.create_text(x + x_offset, y + y_offset + 30, text=score_text, font=('Arial', 18, 'bold'), fill='red', tags="scoreboard")
                 while (index + bustnum + 1) % 3 != 0:
@@ -53,7 +55,7 @@ class Dartboard(tk.Canvas):
                     self.create_text(x + x_offset, y + y_offset + 30, text=score_text, font=('Arial', 18, 'bold'), fill='red', tags="scoreboard")
             else:
                 score_text = str(score)
-                y_offset = ((index + bustnum) // 3) * 30
+                y_offset = ((index + bustnum) // 3) * 12
                 x_offset = ((index + bustnum) % 3) * 50
                 self.create_text(x + x_offset, y + y_offset + 30, text=score_text, font=('Arial', 18, 'bold'), fill='black', tags="scoreboard")
 

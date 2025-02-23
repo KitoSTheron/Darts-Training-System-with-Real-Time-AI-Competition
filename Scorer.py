@@ -24,10 +24,10 @@ def score_darts(starting_score, hits):
 
 def score_sub_51(finish_score,hitscore):
 	
-	if finish_score < 21:
+	if finish_score < 41:
 		if finish_score % 2 == 0:
 			return (180) + finish_score
-		elif (finish_score + hitscore) < 21:
+		elif (finish_score + hitscore) < 41:
 			-hitscore
 	return hitscore 
 
